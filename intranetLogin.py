@@ -11,25 +11,50 @@
     # -1 - UNAUTHORIZED
 accessLvl = 0
 userInfo = []
+# Index corresponds with
+MENU_OPTIONS = ["1", "2", "3", "4", "5"]
+CHOICES = [["1", "2", "3", "4", "5"], ["2", "5"], ["3", "5"]]
 
-def login(user, passW):
-    ######## account for missing text file!
-    ######## pass in file?????
-    with open("intranetInfo.csv", "r") as inFile:
-        junk = inFile.readline()
-        for line in inFile:
-            userInfo = line.split(",")
-            if userInfo[0] == user and userInfo[1] == passW:
-                return int(userInfo[2])
+## Parameters: string filename, string user, string passW
+## Returns: integer accessLvl
+def authenticate(filename, user, passW):
+    try:
+        with open(filename, "r") as inFile:
+            junk = inFile.readline()
+            for line in inFile:
+                userInfo = line.split(",")
+                if userInfo[0] == user and userInfo[1] == passW:
+                    return int(userInfo[2])
+    except FileNotFoundError:
+        print("Error:", filename, "not found.")
     return -1
 
+## Returns: integer accessLvl
+def login():
+    filename = "intranetInfo.csv"
+    
+    print("Intranet Login\n<><><><><><><><><><>")
+    
+    user = input("Username: ")
+    passW = input("Password: ")
+
+    accessLvl = authenticate(filename, user, passW)
+    while accessLvl == -1:
+        print("Username or password is incorrect. Please try again.")
+        user = input("Username: ")
+        passW = input("Password: ")
+        accessLvl = authenticate(filename, user, passW)
+        
+    return accessLvl
+        
 def print_menu():
-    print("<><>MENU<><>")
-    print("1 - Admin")
-    print("2 - Accounting")
-    print("3 - Janitorial") 
-    print("4 - Schedule Edit")
-    print("5 - Exit")
+    print("+--------MENU--------+")
+    print("| 1 - Admin          |")
+    print("| 2 - Accounting     |")
+    print("| 3 - Janitorial     |") 
+    print("| 4 - Schedule Edit  |")
+    print("| 5 - Exit           |")
+    print("+--------------------+")
 
 def back_to_menu(accessLvl):
     back = ""
@@ -38,48 +63,38 @@ def back_to_menu(accessLvl):
         
 def menu_access(accessLvl):
     print_menu()
-    choice = input("Choose an option: ")
-    if choice == "1" or choice == "4":
-        if accessLvl == 0:
-            if choice == "1":
-                print("You have entered the admin area")
-                back_to_menu(accessLvl)
-            else:
-                print("You have entered the schedule area")
-                back_to_menu(accessLvl)
-        else:
-            print("You are not authorized to enter this area")
+    choice = input("Choose a menu option: ")
+
+    # Validate that input is a choice in menu
+    while choice not in MENU_OPTIONS:
+        print("That choice is not in the menu!")
+        choice = input("Choose a menu option: ")
+
+    # Go to area or deny access
+    if choice in CHOICES[accessLvl]:
+        if choice == "1":
+            print("You have entered the admin area")
             back_to_menu(accessLvl)
-    elif choice == "2":
-        if accessLvl == 0 or accessLvl == 1:
+        elif choice == "2":
             print("You have entered the accounting area")
             back_to_menu(accessLvl)
-        else:
-            print("You are not authorized to enter this area")
-            back_to_menu(accessLvl)
-            
-    elif choice == "3":
-        if accessLvl == 0 or accessLvl == 2:
+        elif choice == "3":
             print("You have entered the janitorial area")
             back_to_menu(accessLvl)
-        else:
-            print("You are not authorized to enter this area")
+        elif choice == "4":
+            print("You have entered the schedule area")
             back_to_menu(accessLvl)
+        else:
+            print("See you soon!")
+            return
     else:
-        print("Thank you!")
+        print("XX You do not have access to this menu area! XX")
+        back_to_menu(accessLvl)
+        
 
 ##########
-print("Intranet Login System")
-user = input("Username: ")
-passW = input("Password: ")
-
-accessLvl = login(user, passW)
-while accessLvl == -1:
-    user = input("Username: ")
-    passW = input("Password: ")
-    accessLvl = login(user, passW)
-
-
+        
+accessLvl = login()
 menu_access(accessLvl)
 
     
