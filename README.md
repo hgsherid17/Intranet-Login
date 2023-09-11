@@ -23,7 +23,7 @@ This Python program represents an Intranet login and menu system for a company. 
 ### Access Levels
 0 - Admin access; user can choose any menu option
 
-1 - Accounting access; user can access Time Reporting, Accounting, Engineering Documents, and IT Helpdesk
+1 - Employee access; user can access Time Reporting, Accounting, Engineering Documents, and IT Helpdesk
 
 2 - HR access; user can access Time Reporting, HR Documents, and IT Helpdesk
 
