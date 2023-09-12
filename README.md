@@ -42,11 +42,11 @@ This Python program represents the login and menu of a company intranet system. 
 
 ## Testing Instructions
 1. Create or obtain a CSV file in the format: username, password, accessLvl
-3. **Scenario 1:** Admin Access
+2. **Scenario 1:** Admin Access
 - Log into an account with access level 0
 - Test accessing every menu option to ensure you are granted access to all of them
 - Choose menu option 8 to exit the program
-4. **Scenario 2:** Employee Access
+3. **Scenario 2:** Employee Access
 - Log into an account with access level 1
 - Test accessing every menu option
 - User should be denied access to:
@@ -54,7 +54,7 @@ This Python program represents the login and menu of a company intranet system. 
   - User Management
   - Security Settings
 - Choose menu option 8 to exit the program
-5. **Scenario 3:** HR Access (ex: denzo)
+4. **Scenario 3:** HR Access (ex: denzo)
 - Log into an account with access level 2
 - Test accessing every menu option
 - User should be denied access to:
@@ -63,10 +63,10 @@ This Python program represents the login and menu of a company intranet system. 
   - User Management
   - Security Settings
 - Choose menu option 8 to exit the program
-6. **Scenario 4:** Unauthorized Access
+5. **Scenario 4:** Unauthorized Access
 - Log into an account not listed on the CSV file
 - Ensure that program reprompts user after incorrect username and password are entered
-7. Input Validation
+6. Input Validation and Exception Handling
 - Change "USER_DATA" to a nonexistent file to ensure the program exits gracefully
 - Test varying login credentials
   - No username
