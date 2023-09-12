@@ -1,12 +1,13 @@
 # Intranet Login System
-This Python program represents an Intranet login and menu system for a company. The user is prompted to login, then choose options from a menu. Usernames, passwords, and access levels are stored in a CSV file. Based on the user's access level, they are either granted or denied access to a certain menu option.
+This Python program represents the login and menu of a company intranet system. The user is prompted to log in using a valid username and password, then choose options from a menu. Each user has an access level that grants them permission to certain menu items; based on this, they are either granted or denied access to a particular menu option. Usernames, passwords, and access levels are stored in a CSV file.
+
 ## Features
 ### Variables
 **MENU_OPTIONS:** key-value pairs representing menu options and their corresponding numbers
 
-**MENU_ACCESS:** a 2d array in which index corresponds to accessLvl and the arrays list accessible menu options
+**MENU_ACCESS:** a 2d array in which index corresponds to accessLvl and the array lists accessible menu options for that access level
 
-**USER_DATA:** a string, the title of the desired CSV file
+**USER_DATA:** a string, the name of the desired CSV file
 
 **accessLvl:** an integer value representing the status of the user
 
@@ -52,7 +53,8 @@ This Python program represents an Intranet login and menu system for a company. 
   - HR Documents
   - User Management
   - Security Settings
-5. **Scenario 3:** HR Access
+- Choose menu option 8 to exit the program
+5. **Scenario 3:** HR Access (ex: denzo)
 - Log into an account with access level 2
 - Test accessing every menu option
 - User should be denied access to:
@@ -60,11 +62,12 @@ This Python program represents an Intranet login and menu system for a company. 
   - Engineering Documents
   - User Management
   - Security Settings
+- Choose menu option 8 to exit the program
 6. **Scenario 4:** Unauthorized Access
 - Log into an account not listed on the CSV file
 - Ensure that program reprompts user after incorrect username and password are entered
 7. Input Validation
-- Change "USER_DATA" to a nonexistent file to ensure program exits gracefully
+- Change "USER_DATA" to a nonexistent file to ensure the program exits gracefully
 - Test varying login credentials
   - No username
   - No password
