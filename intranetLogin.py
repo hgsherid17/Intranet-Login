@@ -44,27 +44,29 @@ def authenticate(filename, user, passW):
 def login():
     valid = False;
     print("Intranet Login\n<><><><><><><><><><>")
-
+    
+    # Validate input
     while valid == False:
+        # No username entered, reprompt immediately
         user = input("Username: ")
         while user == "":
             valid == False
             print("No input detected. Please try again.")
             user = input("Username: ")
-            
+
+        # No password entered, reprompt immediately
         passW = input("Password: ")
         while passW == "":
             valid = False
             print("No input detected. Please try again.")
             passW = input("Password: ")
-            
+
+        # Check if username and password are valid
         accessLvl = authenticate(USER_DATA, user, passW)
         if accessLvl == -1:
             valid = False
             print("Username or password is incorrect. Please try again.")
-            #accessLvl = authenticate(USER_DATA, user, passW)
         else:
-            
             valid = True
         
     return accessLvl
@@ -108,15 +110,14 @@ def menu_access(accessLvl):
         
 
 ##########
+def main():
 
-accessLvl = login()
+    accessLvl = login()
 
-menu_access(accessLvl)
+    menu_access(accessLvl)
 
-
-
-
-#### TESTING
+if __name__ == "__main__":
+    main()
 
     
 
