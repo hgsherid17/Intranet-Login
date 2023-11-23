@@ -1,8 +1,12 @@
-main {
+.header {
+    text-align: center;
     background-color: aquamarine;
     padding: 20px;
-    border-bottom: #485f6e 1px solid;
-    width: 100%;
+    border: #485f6e 1px solid;
+}
 
+.header h1 {
+    text-transform: capitalize;
+    color: white;
 }
 
