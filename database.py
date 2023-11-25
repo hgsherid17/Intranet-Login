@@ -5,13 +5,16 @@ def create_db():
     try:
         conn = sqlite3.connect('users.db')
         c = conn.cursor()
-        """CREATE TABLE IF NOT EXISTS users 
+
+        '''CREATE TABLE IF NOT EXISTS users 
         (
-        id integer PRIMARY_KEY
+        id INTEGER PRIMARY_KEY AUTOINCREMENT
         username text
         password_hash text
-        access_lvl test
-        );"""
+        access_lvl text
+        );'''
+    except BaseException e:
+
 
 
 
