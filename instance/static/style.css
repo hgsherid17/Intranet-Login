@@ -1,11 +1,13 @@
 body{
     background-color: #fff0e3;
 }
+
 .header {
     text-align: center;
     background-color: #fb9590;
     padding: 20px;
-    border-bottom: black 2px solid;
+    margin: 50px;
+    border: #ff8d82 2px solid;
 }
 
 .header h1 {
@@ -13,16 +15,27 @@ body{
     color: #002147;
 }
 
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .login {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     border: black 2px solid;
     background-color: #2b637c;
-    padding: 40px;
-    margin: 100px;
+    padding: 100px;
+    width: 400px;
+    height: 400px;
+    margin: 70px;
 }
 
 .submit_button {
     justify-content: center;
+    align-items: center;
     background-color: #fcd59c;
 }

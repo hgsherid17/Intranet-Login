@@ -28,6 +28,11 @@ def login():
                            title="Secure Login",
                            heading="Secure Login")
 
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+    return render_template('signup.html')
+
+
 @app.route("/home", methods=['GET'])
 def home():
     username=request.args.get('username')
