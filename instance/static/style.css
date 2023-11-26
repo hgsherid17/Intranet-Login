@@ -1,24 +1,28 @@
 body{
-    background-color: antiquewhite;
+    background-color: #fff0e3;
 }
 .header {
     text-align: center;
-    background-color: aquamarine;
+    background-color: #fb9590;
     padding: 20px;
-    border: #485f6e 1px solid;
+    border-bottom: black 2px solid;
 }
 
 .header h1 {
     text-transform: capitalize;
-    color: white;
+    color: #002147;
 }
 
 .login {
     display: flex;
     justify-content: center;
     border: black 2px solid;
-    background-color: cadetblue;
+    background-color: #2b637c;
     padding: 40px;
     margin: 100px;
 }
 
+.submit_button {
+    justify-content: center;
+    background-color: #fcd59c;
+}

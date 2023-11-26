@@ -22,7 +22,8 @@ def login():
             if authenticate(pw_hash, password, 40):
                 return redirect(url_for('home', username=username, access_lvl=credentials[username]['access_lvl']))
         except KeyError:
-            flash("Invalid username or password!", 'alert-danger')
+            pass
+        flash("Invalid username or password!", 'alert-danger')
     return render_template('login.html',
                            title="Secure Login",
                            heading="Secure Login")
@@ -31,5 +32,5 @@ def login():
 def home():
     username=request.args.get('username')
     access_lvl = request.args.get('access_lvl')
-    flash("Welcome! You have logged in!", "alert-success")
+    flash("Welcome, " + username + "! You have logged in!", "alert-success")
     return render_template('home.html', username=username, access_lvl=access_lvl)
