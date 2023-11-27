@@ -1,6 +1,7 @@
 import csv
 from flask import Flask, render_template, redirect, request, flash, url_for
-from authenticate import authenticate
+from authenticate import authenticate, hash_pw
+from database import add_account
 
 app = Flask(__name__, static_folder="instance/static")
 app.config.from_object('config')
@@ -28,8 +29,22 @@ def login():
                            title="Secure Login",
                            heading="Secure Login")
 
+
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        ## USERNAME TAKEN
+        try:
+            username = request.form.get('username')
+            password = request.form.get('password')
+            confirm_password = request.form.get('confirm_password')
+            if password == confirm_password:
+                password_hash = hash_pw(password)
+                add_account(username, password_hash, 1)
+                return redirect(url_for('login'))
+        except KeyError:
+            pass
+        flash("Passwords did not match! Please try again.", 'alert-danger')
     return render_template('signup.html')
 
 
