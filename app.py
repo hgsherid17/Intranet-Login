@@ -1,7 +1,7 @@
 import csv
 from flask import Flask, render_template, redirect, request, flash, url_for
 from authenticate import authenticate, hash_pw
-from database import add_account
+from database import add_account, get_account
 
 app = Flask(__name__, static_folder="instance/static")
 app.config.from_object('config')
@@ -9,19 +9,22 @@ app.config.from_object('config')
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
-    with open(app.config['CREDENTIALS_FILE']) as fh:
-        reader = csv.DictReader(fh)
-        credentials = {row['username']:
-                           {'password_hash': row['password_hash'],
-                            'access_lvl': row['access_lvl']}
-                       for row in reader}
+    # with open(app.config['CREDENTIALS_FILE']) as fh:
+    #     reader = csv.DictReader(fh)
+    #     credentials = {row['username']:
+    #                        {'password_hash': row['password_hash'],
+    #                        'access_lvl': row['access_lvl']}
+    #                   for row in reader}
     if request.method == 'POST':
         try:
             username = request.form.get('username')
             password = request.form.get('password')
-            pw_hash = credentials[username]['password_hash']
-            if authenticate(pw_hash, password, 40):
-                return redirect(url_for('home', username=username, access_lvl=credentials[username]['access_lvl']))
+            credentials = get_account(username)
+            if credentials is not None:
+                pw_hash = credentials[0]
+            # pw_hash = credentials[username]['password_hash']
+                if pw_hash is not None and authenticate(pw_hash, password, 40):
+                    return redirect(url_for('home', username=username, access_lvl=credentials[1]))
         except KeyError:
             pass
         flash("Invalid username or password!", 'alert-danger')

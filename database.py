@@ -3,20 +3,19 @@ from datetime import datetime
 import config
 
 CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY_KEY AUTOINCREMENT
-    username text NOT NULL
-    password_hash text NOT NULL
-    access_lvl text NOT NULL
-    time_created datetime NOT NULL
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username text NOT NULL,
+    password_hash text NOT NULL,
+    access_lvl text NOT NULL,
+    time_created datetime NOT NULL,
     last_accessed datetime NOT NULL
     );'''
 
 INSERT_ACCOUNT = '''INSERT INTO users
-(id, username, password_hash, access_lvl, time_created, last_accessed)
-VALUES("{id}", "{username}", "{password_hash}", "{access_lvl}", "{time_created}", "{last_accessed}");'''
+(username, password_hash, access_lvl, time_created, last_accessed)
+VALUES(?, ?, ?, ?, ?);'''
 
-GET_ACCOUNT = '''SELECT from users WHERE username = '{username}'
-'''
+GET_ACCOUNT = '''SELECT password_hash, access_lvl from users WHERE username = ?'''
 
 
 def create_db():
@@ -28,7 +27,7 @@ def create_db():
         c.execute(CREATE_TABLE)
         conn.commit()
         return True
-    except BaseException:
+    except BaseException as e:
         return False
     finally:
         if c is not None:
@@ -40,23 +39,16 @@ def create_db():
 def add_account(username, password_hash, access_lvl):
     conn = None
     c = None
-    time_created = datetime.now()
-    insert_query = INSERT_ACCOUNT.format(
-        id,
-        username,
-        password_hash,
-        access_lvl,
-        time_created,
-        time_created
-    )
-
+    time_created = get_time()
+    last_accessed = time_created
     try:
         conn = sqlite3.connect(config.DATABASE)
         c = conn.cursor()
-        c.executemany(insert_query)
+        c.execute(INSERT_ACCOUNT, (username, password_hash, access_lvl, time_created, last_accessed))
         conn.commit()
-    except sqlite3.IntegrityError:
-        print("Error")
+        print(f"Success adding account {username}")
+    except sqlite3.IntegrityError as e:
+        print(f"Error adding account: {e}")
     finally:
         if c is not None:
             c.close()
@@ -64,6 +56,27 @@ def add_account(username, password_hash, access_lvl):
             conn.close()
 
 
+def get_account(username):
+    conn = None
+    c = None
+    try:
+        conn = sqlite3.connect(config.DATABASE)
+        c = conn.cursor()
+        c.execute(GET_ACCOUNT, (username,))
+        result = c.fetchone()
+        return result if result else None
+    except sqlite3.DatabaseError as e:
+        print(f"Error {e}. Could not retrieve account data for {username}.")
+    finally:
+        if c is not None:
+            c.close()
+        if conn is not None:
+            conn.close()
+
+
+def get_time():
+    time = datetime.now()
+    return time.strftime("%m/%d/%Y, %H:%M:%S")
 
 
 
