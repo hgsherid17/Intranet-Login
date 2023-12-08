@@ -1,5 +1,8 @@
 """"
 Password salting and hashing example
+
+Author: James Eddy
+Edited by: Hannah Sheridan
 """
 
 import hashlib

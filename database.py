@@ -1,3 +1,12 @@
+"""
+    Intranet User Database Management
+
+    This program defines functions to manage user accounts in an intranet system. It includes
+    database operations for creating tables, adding accounts, retrieving account information,
+    getting a list of all accounts, and obtaining the current timestamp.
+
+    Author: Hannah Sheridan
+"""
 import sqlite3
 from datetime import datetime
 import config

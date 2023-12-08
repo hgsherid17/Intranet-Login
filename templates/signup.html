@@ -1,6 +1,6 @@
 {% extends "top.html" %}
-
 {% block content %}
+
 <main class = "main">
     <div class = "login">
         <h2>Sign up:</h2>
@@ -40,13 +40,9 @@
             <div>
                 <label for="generated_password">Suggested Password:</label><br>
                 <span id ="generated_password">{{generated_password}}</span>
-        <!--<input type="text" id="generated_password" name="generated_password" value="{{ generated_password }}" readonly>-->
             </div>
         </form>
-        <!--Password: {{generated_password}}-->
     </div>
-
-
 </main>
 
 {% endblock %}

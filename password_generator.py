@@ -1,13 +1,22 @@
-# Num, lower, upper, special, 8-25 chars
+"""
+    Password Authenticator and Generator
+
+    This program contains functions for creating strong passwords and testing password strength
+
+    Author: Hannah Sheridan
+"""
+
 import random
 
 
 def create_strong_password():
+    """ Generates a random strong password """
     strong = ""
     for i in range(0, 24):
         val = random.randint(33, 126)
         strong += chr(val)
 
+    # Ensure password meets requirements
     if test_password(strong):
         print(strong)
         return strong
@@ -16,26 +25,34 @@ def create_strong_password():
 
 
 def test_password(password) -> bool:
-    valid = 0
+    """ Tests the strength of a given password """
+    special = False
+    upper = False
+    lower = False
 
+    # Password length must be between 8-25 characters
     if len(password) < 8 & len(password) > 25:
         return False
+
+    # Password must include at least one special character
     for s in " ~`!@#$%^&*()-_=+{}[]|\\:;\"',<.>/?":
         if s in password:
-            valid += 1
-            break
+            special = True
+
+    # Password must include at least one upper case character
     for s in range(65, 90):
         if chr(s) in password:
-            valid += 1
-            break
+            upper = True
+
+    # Password must include at least one lowercase character
     for s in range(97, 122):
         if chr(s) in password:
-            valid += 1
-            break
-    if valid < 3:
+            lower = True
+
+    if special and upper and lower:
+        return True
+    else:
         return False
-    
-    return True
 
 
 
