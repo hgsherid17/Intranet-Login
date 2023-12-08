@@ -5,10 +5,11 @@ import random
 def create_strong_password():
     strong = ""
     for i in range(0, 24):
-        val = random.randint(31, 126)
+        val = random.randint(33, 126)
         strong += chr(val)
 
     if test_password(strong):
+        print(strong)
         return strong
     else:
         create_strong_password()

@@ -13,6 +13,7 @@
             <label for="user">Password:</label><input class = "textbox" type="password" id="password"
                                                       name = "password" required><br>
 
+
             <label for="user">Confirm Password:</label><input class = "textbox" type="password" id="password"
                                                               name="confirm_password" required><br><br>
             <button type="submit" class="submit_button">
@@ -22,6 +23,26 @@
         <br>
         <a href="{{url_for('.login')}}">Already have an account? Log in here.</a>
     </div>
+    <div class = "requirements">
+        Password must satisfy the following requirements:<br>
+
+        - Between 8 and 25 characters<br>
+
+        - At least one uppercase letter<br>
+
+        - At least one lowercase letter<br>
+
+        - At least one special character<br>
+    </div> <br>
+    <div class = "generator-space">
+        <form action = "{{ url_for('generate_password') }}" method = "GET">
+            <button type = "submit" class = "generator">
+            Generate Password
+            </button>
+        </form>
+        Password: {{generated_password}}
+    </div>
+
 
 </main>
 
