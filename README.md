@@ -7,6 +7,7 @@ Each user has an access level that grants them permission to certain menu items;
 
 - [Programs](#programs)
 - [Features](#features)
+- [Installation](#installation-instructions)
 - [Testing Instructions](#testing-instructions)
 
 ## Programs
