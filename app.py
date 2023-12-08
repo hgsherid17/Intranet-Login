@@ -1,7 +1,7 @@
 import csv
 from flask import Flask, render_template, redirect, request, flash, url_for, session
 from authenticate import authenticate, hash_pw
-from database import add_account, get_account, get_all_accounts
+from database import add_account, get_account, get_all_accounts, clear_table
 from password_generator import test_password, create_strong_password
 from intranetLogin import MENU_ACCESS, MENU_OPTIONS
 
@@ -11,6 +11,7 @@ app.config.from_object('config')
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
+    #clear_table()
     if request.method == 'POST':
         try:
             username = request.form.get('username')
@@ -45,11 +46,12 @@ def signup():
             confirm_password = request.form.get('confirm_password')
             all_users = get_all_accounts()
 
+            if all_users is not None:
             # Check for duplicate usernames
-            for user in all_users:
-                if user[0] == username:
-                    duplicate = True
-                    break
+                for user in all_users:
+                    if user[0] == username:
+                        duplicate = True
+                        break
 
             # If username is taken, print error message
             if duplicate == True:
@@ -58,7 +60,7 @@ def signup():
                 # If passwords match and are strong, redirect to login
                 if test_password(password) and password == confirm_password:
                     password_hash = hash_pw(password)
-                    add_account(username, password_hash, 1)
+                    add_account(username, password_hash, 2)
                     return redirect(url_for('login'))
                 # If password not strong, print error message
                 if not test_password(password):
@@ -74,7 +76,7 @@ def signup():
 def home():
     username = session.get('username')
     access_lvl = session.get('access_lvl')
-    flash("Welcome, " + username + "! Your access level is" + access_lvl, "alert-success")
+    flash("Welcome, " + username + "! Your access level is " + access_lvl, "alert-success")
     allowed_options = MENU_ACCESS[int(access_lvl)]
 
     return render_template('home.html', menu_options=allowed_options, MENU_OPTIONS=MENU_OPTIONS)

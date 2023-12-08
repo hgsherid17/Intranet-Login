@@ -39,6 +39,16 @@ body{
     align-items: center;
     background-color: #fcd59c;
 }
+
 .requirements {
     color: azure;
+    background-color: #4f90ad;
+    border: black 2px solid;
+    padding: 20px;
+}
+
+.generator {
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
 }
