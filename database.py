@@ -30,6 +30,7 @@ GET_ALL_ACCOUNTS = '''SELECT username from users'''
 
 CLEAR_TABLE = '''DELETE FROM users;'''
 
+UPDATE_ACCESSED = '''UPDATE users SET last_accessed = ? WHERE username = ?'''
 
 def create_db():
     conn = None
@@ -129,3 +130,20 @@ def clear_table():
         if conn is not None:
             conn.close()
 
+
+def update_last_accessed(username):
+    conn = None
+    c = None
+    try:
+        conn = sqlite3.connect(config.DATABASE)
+        c = conn.cursor()
+        current_time = get_time()
+        c.execute(UPDATE_ACCESSED, (current_time, username))
+        conn.commit()
+    except sqlite3.DatabaseError as e:
+        print(f"Error {e}. Could not update timestamp for {username}.")
+    finally:
+        if c is not None:
+            c.close()
+        if conn is not None:
+            conn.close()

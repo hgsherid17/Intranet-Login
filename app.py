@@ -10,7 +10,7 @@ Author: Hannah Sheridan
 """
 from flask import Flask, render_template, redirect, request, flash, url_for, session
 from authenticate import authenticate, hash_pw
-from database import add_account, get_account, get_all_accounts, clear_table
+from database import add_account, get_account, get_all_accounts, update_last_accessed
 from password_generator import test_password, create_strong_password
 from intranetLogin import MENU_ACCESS, MENU_OPTIONS
 
@@ -34,6 +34,7 @@ def login():
 
                 # If passwords match, redirect to home
                 if pw_hash is not None and authenticate(pw_hash, password, 40):
+                    update_last_accessed(username)
                     session['username'] = username
                     session['access_lvl'] = credentials[1]
                     return redirect(url_for('home'))

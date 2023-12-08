@@ -26,13 +26,14 @@ def create_strong_password():
 
 def test_password(password) -> bool:
     """ Tests the strength of a given password """
+    length = False
     special = False
     upper = False
     lower = False
 
     # Password length must be between 8-25 characters
-    if len(password) < 8 & len(password) > 25:
-        return False
+    if 8 <= len(password) <= 25:
+        length = True
 
     # Password must include at least one special character
     for s in " ~`!@#$%^&*()-_=+{}[]|\\:;\"',<.>/?":
@@ -49,7 +50,7 @@ def test_password(password) -> bool:
         if chr(s) in password:
             lower = True
 
-    if special and upper and lower:
+    if special and upper and lower and length:
         return True
     else:
         return False
