@@ -57,6 +57,16 @@ Each user has an access level that grants them permission to certain menu items;
 | hschrader | Marie307$ | 1 |
 | walterjr | BreAkfAst17%! | 2 |
 
+## Installation Instructions
+1. Install SQLite: https://www.sqlite.org/download.html
+2. Install Flask:
+  ```angular2html
+pip install flask
+```
+3. Download all program files
+4. Create database using the `create_db()` function in `database.py`
+
+    NOTE: `werk.py` does this for you when running the flask application
 ## Testing Instructions
 1. Run the Flask app using `werk.py` and confirm that it runs successfully
 2. Test User Authentication
