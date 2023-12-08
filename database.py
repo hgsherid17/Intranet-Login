@@ -24,13 +24,12 @@ INSERT_ACCOUNT = '''INSERT INTO users
 (username, password_hash, access_lvl, time_created, last_accessed)
 VALUES(?, ?, ?, ?, ?);'''
 
-GET_ACCOUNT = '''SELECT password_hash, access_lvl from users WHERE username = ?'''
+GET_ACCOUNT = '''SELECT password_hash, access_lvl from users WHERE username = ?;'''
 
 GET_ALL_ACCOUNTS = '''SELECT username from users'''
 
-CLEAR_TABLE = '''DELETE FROM users;'''
-
 UPDATE_ACCESSED = '''UPDATE users SET last_accessed = ? WHERE username = ?'''
+
 
 def create_db():
     conn = None
@@ -109,26 +108,6 @@ def get_all_accounts():
 def get_time():
     time = datetime.now()
     return time.strftime("%m/%d/%Y, %H:%M:%S")
-
-
-def clear_table():
-    conn = None
-    c = None
-    try:
-        conn = sqlite3.connect(config.DATABASE)
-        c = conn.cursor()
-        c.execute(CLEAR_TABLE)
-        conn.commit()
-        c.execute('''VACUUM;''')
-
-        print("Cleared")
-    except sqlite3.DatabaseError as e:
-        print(f"Error {e}. Could not retrieve accounts.")
-    finally:
-        if c is not None:
-            c.close()
-        if conn is not None:
-            conn.close()
 
 
 def update_last_accessed(username):

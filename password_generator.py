@@ -18,7 +18,6 @@ def create_strong_password():
 
     # Ensure password meets requirements
     if test_password(strong):
-        print(strong)
         return strong
     else:
         create_strong_password()
