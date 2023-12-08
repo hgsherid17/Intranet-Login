@@ -36,13 +36,13 @@ def login():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    generated_password = ""
+    strong_password = create_strong_password()
     duplicate = False
     if request.method == 'POST':
         # USERNAME TAKEN
         try:
             # Generate strong password suggestion
-            generated_password = request.form.get('generated_password')
+            #generated_password = request.args.get('generated_password')
 
             username = request.form.get('username')
             password = request.form.get('password')
@@ -72,7 +72,7 @@ def signup():
                     flash("Passwords did not match! Please try again.", 'alert-danger')
         except KeyError:
             pass
-    return render_template('signup.html', generated_password=generated_password)
+    return render_template('signup.html', generated_password=strong_password)
 
 
 @app.route("/home", methods=['GET'])
@@ -81,10 +81,3 @@ def home():
     access_lvl = request.args.get('access_lvl')
     flash("Welcome, " + username + "! You have logged in!", "alert-success")
     return render_template('home.html', username=username, access_lvl=access_lvl)
-
-
-@app.route("/generate_password", methods=['GET'])
-def generate_password():
-    strong_password = create_strong_password()
-    session['generated_password'] = strong_password
-    return redirect(url_for('signup'))
