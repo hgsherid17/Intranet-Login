@@ -23,12 +23,15 @@ def test_password(password) -> bool:
     for s in " ~`!@#$%^&*()-_=+{}[]|\\:;\"',<.>/?":
         if s in password:
             valid += 1
+            break
     for s in range(65, 90):
         if chr(s) in password:
             valid += 1
+            break
     for s in range(97, 122):
         if chr(s) in password:
             valid += 1
+            break
     if valid < 3:
         return False
     

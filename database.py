@@ -84,7 +84,6 @@ def get_all_accounts():
         c = conn.cursor()
         c.execute(GET_ALL_ACCOUNTS)
         result = c.fetchall()
-        print(result)
         return result if result else None
     except sqlite3.DatabaseError as e:
         print(f"Error {e}. Could not retrieve accounts.")
@@ -98,10 +97,5 @@ def get_all_accounts():
 def get_time():
     time = datetime.now()
     return time.strftime("%m/%d/%Y, %H:%M:%S")
-
-
-
-
-
 
 

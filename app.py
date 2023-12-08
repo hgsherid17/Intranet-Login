@@ -3,6 +3,7 @@ from flask import Flask, render_template, redirect, request, flash, url_for, ses
 from authenticate import authenticate, hash_pw
 from database import add_account, get_account, get_all_accounts
 from password_generator import test_password, create_strong_password
+from intranetLogin import MENU_ACCESS, MENU_OPTIONS
 
 app = Flask(__name__, static_folder="instance/static")
 app.config.from_object('config')
@@ -10,12 +11,6 @@ app.config.from_object('config')
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
-    # with open(app.config['CREDENTIALS_FILE']) as fh:
-    #     reader = csv.DictReader(fh)
-    #     credentials = {row['username']:
-    #                        {'password_hash': row['password_hash'],
-    #                        'access_lvl': row['access_lvl']}
-    #                   for row in reader}
     if request.method == 'POST':
         try:
             username = request.form.get('username')
@@ -23,9 +18,11 @@ def login():
             credentials = get_account(username)
             if credentials is not None:
                 pw_hash = credentials[0]
-            # pw_hash = credentials[username]['password_hash']
+
                 if pw_hash is not None and authenticate(pw_hash, password, 40):
-                    return redirect(url_for('home', username=username, access_lvl=credentials[1]))
+                    session['username'] = username
+                    session['access_lvl'] = credentials[1]
+                    return redirect(url_for('home'))
         except KeyError:
             pass
         flash("Invalid username or password!", 'alert-danger')
@@ -36,14 +33,12 @@ def login():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    # Generate strong password suggestion
     strong_password = create_strong_password()
     duplicate = False
     if request.method == 'POST':
         # USERNAME TAKEN
         try:
-            # Generate strong password suggestion
-            #generated_password = request.args.get('generated_password')
-
             username = request.form.get('username')
             password = request.form.get('password')
 
@@ -77,7 +72,17 @@ def signup():
 
 @app.route("/home", methods=['GET'])
 def home():
-    username=request.args.get('username')
-    access_lvl = request.args.get('access_lvl')
-    flash("Welcome, " + username + "! You have logged in!", "alert-success")
-    return render_template('home.html', username=username, access_lvl=access_lvl)
+    username = session.get('username')
+    access_lvl = session.get('access_lvl')
+    flash("Welcome, " + username + "! Your access level is" + access_lvl, "alert-success")
+    allowed_options = MENU_ACCESS[int(access_lvl)]
+
+    return render_template('home.html', menu_options=allowed_options, MENU_OPTIONS=MENU_OPTIONS)
+
+
+@app.route("/area", methods = ['GET'])
+def area():
+    option = request.args.get('option')
+    username = session.get('username')
+    access_lvl = session.get('access_lvl')
+    return render_template('area.html', selected_option=option, MENU_OPTIONS=MENU_OPTIONS, username=username, access_lvl=access_lvl)

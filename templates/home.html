@@ -2,7 +2,16 @@
 {% block content %}
 <body>
 <main class = "main">
-    Welcome, {{username}} Your access level is {{access_lvl}}!
+    <br>
+    <div>
+        <h3>Menu Options:</h3>
+        <ul>
+            {% for option in menu_options %}
+                <li>{{option}}: <a href = "{{ url_for ('area', option=option)}}">{{MENU_OPTIONS[option]}}</a></li>
+            {% endfor %}
+            <li>8: <a href="{{url_for ('login')}}">Log out</a></li>
+        </ul>
+    </div>
 
 </main>
 

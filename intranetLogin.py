@@ -13,9 +13,8 @@ MENU_OPTIONS = {"1" : "Time Reporting",
                 "4" : "HR Documents",
                 "5" : "IT Helpdesk",
                 "6" : "User Management",
-                "7" : "Security Settings",
-                "8" : "Exit"}
-MENU_ACCESS = [["1", "2", "3", "4", "5", "6", "7", "8"], ["1", "2", "3", "5", "8"], ["1", "4", "5", "8"]]
+                "7" : "Security Settings"}
+MENU_ACCESS = [["1", "2", "3", "4", "5", "6", "7"], ["1", "2", "3", "5"], ["1", "4", "5"]]
 USER_DATA = "intranetInfo.csv"
 accessLvl = 0
 

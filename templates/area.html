@@ -1,0 +1,15 @@
+{% extends "top.html" %}
+{% block content %}
+<body>
+<main class = "main">
+    <div>You have accessed the {{MENU_OPTIONS[selected_option]}} area.</div>
+
+    <div><a href="{{url_for('.home')}}">Back to menu?</a></div>
+
+</main>
+
+
+</body>
+
+
+{% endblock %}
