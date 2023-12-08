@@ -22,6 +22,7 @@ Each user has an access level that grants them permission to certain menu items;
 
 **password_generator.py:** Contains functions for generating strong passwords and testing password strength
 
+**intranetLogin.py:** Defines user access levels and menu options. Contains a function that ensures user is granted access to a given menu option.
 ## Features
 
 - User authentication with password hashing
@@ -84,47 +85,22 @@ Each user has an access level that grants them permission to certain menu items;
 4. Test Access Control
 - **Scenario 1:** Admin Access
   - Log into an account with access level 0
-  - Ensure that the program displays all menu options
+  - Test accessing every menu option to ensure you are granted access to all of them
+  - Choose menu option 8 to return to menu
 - **Scenario 2:** Employee Access
   - Log into an account with access level 1
-  - Ensure that the program does not display HR Documents, User Management, or Security Settings
-- **Scenario 3:** HR Access
+  - Test accessing every menu option
+  - User should be denied access to:
+    - HR Documents
+    - User Management
+    - Security Settings
+  - Choose menu option 8 to return to menu
+- **Scenario 3:** HR Access 
   - Log into an account with access level 2
-  - Ensure that the program does not display Accounting, Engineering Documents, User Management, or Security Settings
-
-
-
-2. **Scenario 1:** Admin Access
-- Log into an account with access level 0
-- Test accessing every menu option to ensure you are granted access to all of them
-- Choose menu option 8 to exit the program
-3. **Scenario 2:** Employee Access
-- Log into an account with access level 1
-- Test accessing every menu option
-- User should be denied access to:
-  - HR Documents
-  - User Management
-  - Security Settings
-- Choose menu option 8 to exit the program
-4. **Scenario 3:** HR Access (ex: denzo)
-- Log into an account with access level 2
-- Test accessing every menu option
-- User should be denied access to:
-  - Accounting
-  - Engineering Documents
-  - User Management
-  - Security Settings
-- Choose menu option 8 to exit the program
-5. **Scenario 4:** Unauthorized Access
-- Log into an account not listed on the CSV file
-- Ensure that program reprompts user after incorrect username and password are entered
-6. Input Validation and Exception Handling
-- Change "USER_DATA" to a nonexistent file to ensure the program exits gracefully
-- Test varying login credentials
-  - No username
-  - No password
-  - Incorrect username and password
-  - Incorrect username and correct password
-  - Correct username and incorrect password
-  - Correct username and password
-- Attempt to choose non-existent menu options (e.g. -1, 'hello', 9)
+  - Test accessing every menu option
+  - User should be denied access to:
+    - Accounting
+    - Engineering Documents
+    - User Management
+    - Security Settings
+  - Choose menu option 8 to return to menu

@@ -1,4 +1,9 @@
+"""
+    This program defines menu options and access levels for an intranet system. It
+    contains a function that returns true if a user has access to a given menu option.
 
+    Author: Hannah Sheridan
+"""
 # Define access levels
 MENU_OPTIONS = {"1" : "Time Reporting",
                 "2" : "Accounting",
