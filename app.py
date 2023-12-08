@@ -12,7 +12,7 @@ from flask import Flask, render_template, redirect, request, flash, url_for, ses
 from authenticate import authenticate, hash_pw
 from database import add_account, get_account, get_all_accounts, update_last_accessed
 from password_generator import test_password, create_strong_password
-from intranetLogin import MENU_ACCESS, MENU_OPTIONS
+from intranetLogin import MENU_ACCESS, MENU_OPTIONS, menu_access
 
 app = Flask(__name__, static_folder="instance/static")
 app.config.from_object('config')
@@ -97,6 +97,7 @@ def home():
 
     # Issue welcome message and print allowed menu options
     flash("Welcome, " + username + "! Your access level is " + access_lvl, "alert-success")
+
     allowed_options = MENU_ACCESS[int(access_lvl)]
 
     return render_template('home.html', menu_options=allowed_options, MENU_OPTIONS=MENU_OPTIONS)
@@ -110,4 +111,10 @@ def area():
     option = request.args.get('option')
     username = session.get('username')
     access_lvl = session.get('access_lvl')
+
+    if not menu_access(access_lvl, option):
+        flash("Access Denied! Choose a different option.", 'alert-danger')
+        return redirect(url_for('home'))
+
     return render_template('area.html', selected_option=option, MENU_OPTIONS=MENU_OPTIONS, username=username, access_lvl=access_lvl)
+
